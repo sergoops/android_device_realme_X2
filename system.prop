@@ -41,6 +41,10 @@ persist.vendor.dpm.feature=0
 # Charger
 ro.charger.enable_suspend=true
 
+# Chipset
+ro.soc.manufacturer=Qualcomm
+ro.soc.model=SM7150
+
 # Data modules
 persist.data.netmgrd.qos.enable=true
 persist.vendor.data.profile_update=true
