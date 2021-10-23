@@ -1188,4 +1188,14 @@
 
      <!-- How long it takes for the HW to start illuminating after the illumination is requested. -->
     <integer name="config_udfps_illumination_transition_ms">0</integer>
+
+    <!-- Override value to use for proximity sensor.  -->
+    <string name="proximity_sensor_type" translatable="false">android.sensor.tp_proximity</string>
+
+    <!-- Override value to use for proximity sensor as confirmation for proximity_sensor_type. -->
+    <string name="proximity_sensor_secondary_type" translatable="false">qti.sensor.proximity_fake</string>
+
+    <!-- If using proximity_sensor_confirmation_type, specifies a threshold value to distinguish
+      near and far break points. A sensor value less than this is considered "near". -->
+    <item name="proximity_sensor_secondary_threshold" translatable="false" format="float" type="dimen">5.0</item>    
 </resources>
