@@ -90,6 +90,11 @@ on post-fs-data
     mount none /system/lib/hw/android.hardware.sensors@1.0-impl.x2.so /vendor/lib/hw/android.hardware.sensors@1.0-impl.so bind
     mount none /system/lib64/hw/android.hardware.sensors@1.0-impl.x2.so /vendor/lib64/hw/android.hardware.sensors@1.0-impl.so bind
 
+    mkdir /mnt/vendor/dsp 0770 root root
+    copy /vendor/dsp/cdsp/fastrpc_shell_3 /mnt/vendor/dsp/fastrpc_shell_3
+    chmod 0644 /mnt/vendor/dsp/fastrpc_shell_3
+    mount none /mnt/vendor/dsp/fastrpc_shell_3 /vendor/dsp/cdsp/fastrpc_shell_3 bind
+
 service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
     override
     class main
