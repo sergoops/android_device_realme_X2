@@ -148,6 +148,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     netutils-wrapper-1.0
 
+# USB
+PRODUCT_PACKAGES += \
+    android.hardware.usb@1.0-service.basic.x2
+
 # Perf
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.perf@2.2
