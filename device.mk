@@ -91,8 +91,7 @@ PRODUCT_PACKAGES += \
     vendor.display.config@2.0
 
 # Doze
-#PRODUCT_PACKAGES += \
-    RealmeProximityHelper \
+PRODUCT_PACKAGES += \
     RealmeParts
 
 # Fingerprint
