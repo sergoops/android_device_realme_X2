@@ -19,8 +19,10 @@ $(call inherit-product, vendor/google-pixel/config.mk)
 $(call inherit-product, vendor/partner_modules/build/mainline_modules_s_flatten_apex.mk)
 
 # VNDK
-PRODUCT_TARGET_VNDK_VERSION := 29
-PRODUCT_EXTRA_VNDK_VERSIONS := 29
+PRODUCT_EXTRA_VNDK_VERSIONS := 30
+
+# Shipping API level
+PRODUCT_SHIPPING_API_LEVEL := 28
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2340
@@ -41,18 +43,6 @@ PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
-
-# Copy the kernel from the prebuilts directory.
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilts/kernel:kernel
-
-# Boot animation
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilts/bootanimation.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
-
-#Apn file from prebuilts
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilts/apns-conf.xml:system/etc/apns-conf.xml
 
 # AID/fs configs
 PRODUCT_PACKAGES += \
@@ -77,6 +67,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Snap
 
+# Configstore
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.capabilityconfigstore@1.0
+
 # Common init scripts
 PRODUCT_PACKAGES += \
     init.qcom.rc \
@@ -85,22 +79,29 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fstab.qcom
 
+# Ramdisk shit
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/ramdisk/,$(TARGET_COPY_OUT_RAMDISK))
+
 # Display
 PRODUCT_PACKAGES += \
     libdisplayconfig \
+    libdisplayconfig.qti \
+    libgralloc.qti \
     libqdMetaData \
     libqdMetaData.system \
-    libvulkan
+    libvulkan \
+    vendor.display.config@2.0
 
 # Doze
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     RealmeProximityHelper \
     RealmeParts
 
 # Fingerprint
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.3-service.x2 \
-    vendor.oppo.hardware.biometrics.fingerprint@2.1
+    vendor.oplus.hardware.biometrics.fingerprint@2.1
 
 # Fingerprint
 PRODUCT_COPY_FILES += \
@@ -119,30 +120,14 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.ims.xml:system/etc/permissions/android.hardware.telephony.ims.xml \
     frameworks/native/data/etc/android.software.controls.xml:system/etc/permissions/android.software.controls.xml
 
-# HotwordEnrollement app permissions
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-hotword.xml:system/etc/permissions/privapp-permissions-hotword.xml
-
-# Privapp Whitelist
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-X2.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-X2.xml \
-    $(LOCAL_PATH)/configs/privapp-permissions-X2.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-X2.xml \
-    $(LOCAL_PATH)/configs/privapp-permissions-X2.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-X2.xml
-
-# TEMP-HOSTPAD
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/hostapd:system/bin/hw/hostapd
-
-# IMS
-PRODUCT_PACKAGES += \
-    ims-ext-common \
-    ims_ext_common.xml
-
 # Input
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/gpio-keys.kl:/system/usr/keylayout/gpio-keys.kl
 
 # Media
+PRODUCT_PACKAGES += \
+    libavservices_minijail
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_profiles_vendor.xml:system/etc/media_profiles_vendor.xml
 
@@ -163,9 +148,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     netutils-wrapper-1.0
 
-# Power
+# Perf
 PRODUCT_PACKAGES += \
-    power.qcom:64
+    vendor.qti.hardware.perf@2.2
 
 # QTI
 PRODUCT_COPY_FILES += \
@@ -178,17 +163,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
 
 # Sensors Hal
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl.x2
 
 # Sensors
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml
-
-# Ril
-PRODUCT_PACKAGES += \
-    android.hardware.radio@1.4
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
@@ -197,6 +178,8 @@ PRODUCT_SOONG_NAMESPACES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
+    ims-ext-common \
+    ims_ext_common.xml \
     qti-telephony-hidl-wrapper \
     qti_telephony_hidl_wrapper.xml \
     qti-telephony-utils \
@@ -210,12 +193,12 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_PACKAGES += \
     textclassifier.bundle1
 
-# Trust HAL
-#PRODUCT_PACKAGES += \
-#    lineage.trust@1.0-service
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal@2.0
 
 # Lights
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.x2
 
 # RCS
@@ -223,7 +206,3 @@ PRODUCT_PACKAGES += \
     com.android.ims.rcsmanager \
     PresencePolling \
     RcsService
-
-# Touch
-PRODUCT_PACKAGES += \
-    lineage.touch@1.0-service.x2

@@ -1,4 +1,3 @@
-import /system/etc/init/init.devicesetting.rc
 
 on init
     # Boot time FS tune
@@ -64,33 +63,17 @@ on property:vold.decrypt=trigger_restart_framework
 
 on post-fs-data
     #Hack until we build the vendor
-    mount none /dev/null /vendor/lib/hw/lights.sm6150.so bind
-    mount none /dev/null /vendor/lib/hw/android.hardware.light@2.0-impl.so bind
-    mount none /dev/null /vendor/lib64/hw/lights.sm6150.so bind
-    mount none /dev/null /vendor/lib64/hw/android.hardware.light@2.0-impl.so bind
     mount none /vendor/lost+found /vendor/overlay bind
-    mount none /vendor/lost+found /vendor/euclid bind
-    mount none /system/bin/hw/hostapd /vendor/bin/hw/hostapd bind
     mount none /system/etc/audio_policy_configuration.xml /vendor/etc/audio/audio_policy_configuration.xml bind
     mount none /system/etc/audio_policy_configuration.xml /vendor/etc/audio_policy_configuration.xml bind
     mount none /system/etc/audio_platform_info_oppo_19771.xml /vendor/etc/audio_platform_info_oppo_19771.xml bind
     mount none /system/etc/mixer_paths_19771.xml /vendor/etc/mixer_paths_19771.xml bind
-    mount none /system/lib64/hw/power.qcom.so /vendor/lib64/hw/power.qcom.so bind
     mount none /system/lib64/soundfx/libvolumelistener.so /vendor/lib64/soundfx/libvolumelistener.so bind
     mount none /system/lib/soundfx/libvolumelistener.so /vendor/lib/soundfx/libvolumelistener.so bind
-    mount none /system/lib/hw/android.hardware.sensors@1.0-impl.x2.so /vendor/lib/hw/android.hardware.sensors@1.0-impl.so bind
-    mount none /system/lib64/hw/android.hardware.sensors@1.0-impl.x2.so /vendor/lib64/hw/android.hardware.sensors@1.0-impl.so bind
 
-service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
-    override
-    class main
-    user radio
-    socket ims_datad stream 0660 system radio
-    group radio wifi inet vendor_qti_diag log
-    disabled
-
-on property:sys.boot_completed=1
-    setprop vendor.oppo.biometrics.fingerprint.boot_completed 1
+#Processgroup
+    chown system system /acct/uid_*
+    chmod 0777 /acct/uid_*
 
 on property:persist.sys.device_provisioned=1
     setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,7
