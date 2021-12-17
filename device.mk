@@ -9,14 +9,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
 
+# Enable updating of APEXes
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
 # Get non-open-source specific aspects
 $(call inherit-product, vendor/realme/X2/X2-vendor.mk)
-
-# Build with GMS
-WITH_GMS := true
-$(call inherit-product, vendor/google/gms/config.mk)
-$(call inherit-product, vendor/google-pixel/config.mk)
-$(call inherit-product, vendor/partner_modules/build/mainline_modules_s_flatten_apex.mk)
 
 # VNDK
 PRODUCT_EXTRA_VNDK_VERSIONS := 30
