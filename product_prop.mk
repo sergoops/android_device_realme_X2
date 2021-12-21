@@ -6,7 +6,3 @@ PRODUCT_PRODUCT_PROPERTIES += \
     ro.secure=0 \
     ro.adb.secure=0
 endif
-
-# Override Display Density
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.sf.lcd_density=437

@@ -41,6 +41,10 @@ persist.vendor.cne.feature=1
 # Charger
 ro.charger.enable_suspend=1
 
+# Chipset
+ro.soc.manufacturer=Qualcomm
+ro.soc.model=SM7150
+
 # Data modules
 persist.data.netmgrd.qos.enable=true
 persist.vendor.data.profile_update=true
@@ -64,6 +68,11 @@ debug.sf.hw=1
 debug.egl.hw=0
 debug.sf.latch_unsignaled=1
 debug.sf.enable_gl_backpressure=1
+debug.sf.disable_backpressure=0
+debug.performance.tuning=1
+sdm.debug.disable_inline_rotator=1
+sdm.debug.disable_inline_rotator_secure=1
+vendor.display.disable_rotator_downscale=1
 ro.surface_flinger.has_wide_color_display=true
 ro.surface_flinger.use_color_management=true
 ro.surface_flinger.has_HDR_display=true
@@ -110,9 +119,15 @@ debug.sf.early.app.duration=16500000
 debug.sf.earlyGl.sf.duration=13500000
 debug.sf.earlyGl.app.duration=21000000
 
+# Override Display Density
+ro.sf.lcd_density=437
+
 # IOP
 vendor.iop.enable_prefetch_ofr=1
 vendor.iop.enable_uxe=0
+
+# IORap
+persist.device_config.runtime_native_boot.iorap_readahead_enable=true
 
 # RIL
 DEVICE_PROVISIONED=1
