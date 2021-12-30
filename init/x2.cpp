@@ -91,6 +91,7 @@ void vendor_load_properties() {
         default: // for debugging
             device = "RMX199X";
             model = "RMX199X";
+            break;
     }
 
     // list of partitions to override props
